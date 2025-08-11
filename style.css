@@ -191,12 +191,16 @@ body {
 .contacts {
   width: 65%;
   padding: 180px 60px;
+  text-align: right; /* Alinea todo a la derecha */
 }
+
 .contacts .name {
-  font-size: var(--nav-font-size);
+  font-size: 18px; /* Tamaño fijo */
   font-weight: 700;
   margin-bottom: 6px;
+  text-transform: uppercase; /* Convierte en mayúsculas */
 }
+
 .contacts .email {
   font-size: var(--nav-font-size);
   font-weight: 400;
