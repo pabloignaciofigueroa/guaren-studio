@@ -1,0 +1,161 @@
+/* General resets and base typography */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222;
+  background-color: #ffffff;
+}
+
+/* Shared logo style for all pages */
+.logo {
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  text-decoration: none;
+  line-height: 1;
+}
+.logo span {
+  display: block;
+  font-size: 52px;
+  font-weight: 700;
+}
+.logo span.grey {
+  color: #777;
+  font-weight: 600;
+}
+.logo span.black {
+  color: #000;
+  font-weight: 700;
+}
+
+/* When using an image for the logo, constrain its size */
+.logo img {
+  width: 280px;
+  height: auto;
+  display: block;
+}
+
+/* Container that holds the two primary columns */
+.page-content {
+  display: flex;
+  height: 100%;
+}
+
+/* Left column: holds information text and bottom navigation */
+.left-panel {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 140px 60px 60px 60px;
+}
+
+/* Information block styling */
+.left-panel .info h1 {
+  font-size: 44px;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.left-panel .info p {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.left-panel .info .label {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+.left-panel .info .value {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+/* Bottom navigation links */
+.nav-bottom a {
+  text-decoration: none;
+  color: #222;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  display: block; /* separate each link onto its own line */
+}
+
+/* When using image buttons in the nav, size them consistently */
+.nav-bottom img {
+  width: 140px;
+  height: auto;
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* Left info image sizing */
+.left-panel .info img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Contact page: display contact image nicely */
+.contact-info img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.nav-bottom a:hover {
+  text-decoration: underline;
+}
+
+/* Right column: image container */
+.right-panel {
+  width: 65%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+.right-panel img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Page 1 specific styling */
+.page1 .left-panel {
+  padding-top: 200px;
+}
+.page1 .nav-bottom {
+  padding-left: 60px;
+  padding-bottom: 60px;
+}
+
+/* Contact page styling */
+.page-contact .page-content {
+  flex-direction: row;
+}
+.page-contact .left-panel {
+  width: 35%;
+  padding-top: 200px;
+  justify-content: flex-end;
+}
+.contact-info {
+  width: 65%;
+  padding: 200px 100px;
+}
+.contact-info p {
+  font-size: 20px;
+  margin-bottom: 40px;
+  line-height: 1.4;
+}
+.contact-info strong {
+  font-weight: 700;
+}
