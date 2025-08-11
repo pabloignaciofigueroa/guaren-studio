@@ -101,12 +101,12 @@
          between the logo and the informational heading.  This
          adjustment makes the spacing consistent with the reference
          material across all project pages. */
-      /* Provide a generous top padding to separate the logo from
-         the project information, but keep it smaller than before
-         to reduce the overall height of the column on mobile
-         devices.  A value of 150px balances breathing room and
-         prevents the navigation from overlapping the text. */
-      padding: 150px 60px 60px 60px;
+      /* Provide generous top padding to separate the logo from
+         the project information.  A larger top padding helps
+         ensure the info block sits far enough below the logo on
+         narrower screens so that the navigation at the bottom
+         does not overlap with the text. */
+      padding: 220px 60px 60px 60px;
     }
 
 /* Information block styling */
@@ -148,6 +148,15 @@
   display: block;
   font-weight: 500;
   font-size: var(--detail-font-size);
+}
+
+/* Add a top margin to the entire info block to create a clear
+   separation between the logo and the project information.  This
+   margin helps ensure the heading and details are grouped as a
+   cohesive block and do not butt up directly against the logo on
+   smaller viewports. */
+.left-panel .info {
+  margin-top: 40px;
 }
 
 /* Bottom navigation links
