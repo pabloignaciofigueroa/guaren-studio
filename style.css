@@ -13,6 +13,23 @@ body {
   background-color: #ffffff;
 }
 
+/*------------------------------------------------------------
+ * Typography scaling and custom properties
+ *
+ * Define variables to control the sizing of navigation links,
+ * primary headings and secondary descriptive lines.  These
+ * variables make it easy to ensure consistent sizes across
+ * pages and to adjust the visual hierarchy when required.
+ * The values were chosen to approximate the proportions in
+ * the user’s reference images.
+ *------------------------------------------------------------*/
+:root {
+  /* Base size for navigation links (OBRAS/CONTACTO) and main headings */
+  --nav-font-size: 30px;
+  /* Size for secondary labels and values (e.g. Comuna, superficie...) */
+  --detail-font-size: 18px;
+}
+
 /* Shared logo style for all pages */
 .logo {
   position: absolute;
@@ -58,44 +75,60 @@ body {
 }
 
 /* Information block styling */
+/* The heading uses the same size as the navigation links.  Each
+ * descriptive line is separated by generous spacing and the
+ * labels/values use a smaller secondary size.
+ */
 .left-panel .info h1 {
-  font-size: 44px;
+  font-size: var(--nav-font-size);
   line-height: 1.1;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+  text-transform: uppercase;
 }
 .left-panel .info p {
-  margin-bottom: 6px;
-  font-size: 14px;
+  margin-bottom: 18px;
+  font-size: var(--detail-font-size);
+  line-height: 1.4;
 }
 .left-panel .info .label {
+  display: block;
+  font-weight: 700;
+  font-size: var(--detail-font-size);
   text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 1px;
-  font-size: 12px;
+  letter-spacing: 0.04em;
 }
 .left-panel .info .value {
+  display: block;
   font-weight: 500;
-  font-size: 16px;
-  margin-bottom: 16px;
+  font-size: var(--detail-font-size);
 }
 
-/* Bottom navigation links */
+/* Bottom navigation links
+ *
+ * Render the navigation links as text at a uniform size so
+ * that “OBRAS” and “CONTACTO” appear identical.  They are
+ * stacked vertically with a small margin between lines.
+ */
 .nav-bottom a {
   text-decoration: none;
   color: #222;
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  display: block; /* separate each link onto its own line */
+  font-size: var(--nav-font-size);
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: block;
 }
 
-/* When using image buttons in the nav, size them consistently */
+/* Remove strict sizing on nav images; images will inherit
+ * their natural dimensions.  The navigation no longer relies
+ * on images but this rule ensures any incidental images
+ * behave predictably.
+ */
 .nav-bottom img {
-  width: 140px;
+  width: auto;
   height: auto;
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 /* Left info image sizing */
@@ -138,24 +171,34 @@ body {
   padding-bottom: 60px;
 }
 
-/* Contact page styling */
+/* Contact page styling
+ *
+ * For the contact page we remove the heavy top padding that
+ * previously pushed the navigation up.  The left panel uses the
+ * same padding as other pages so that the navigation stays
+ * anchored at the bottom via flexbox spacing.  Contact details
+ * are displayed as text within a .contacts container and use
+ * the same size as the navigation items.
+ */
 .page-contact .page-content {
   flex-direction: row;
 }
 .page-contact .left-panel {
   width: 35%;
-  padding-top: 200px;
+  padding: 140px 60px 60px 60px;
   justify-content: flex-end;
 }
-.contact-info {
+.contacts {
   width: 65%;
-  padding: 200px 100px;
+  padding: 180px 60px;
 }
-.contact-info p {
-  font-size: 20px;
-  margin-bottom: 40px;
-  line-height: 1.4;
-}
-.contact-info strong {
+.contacts .name {
+  font-size: var(--nav-font-size);
   font-weight: 700;
+  margin-bottom: 6px;
+}
+.contacts .email {
+  font-size: var(--nav-font-size);
+  font-weight: 400;
+  margin-bottom: 32px;
 }
