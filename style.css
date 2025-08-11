@@ -35,10 +35,25 @@
  * the user’s reference images.
  *------------------------------------------------------------*/
 :root {
-  /* Base size for navigation links (OBRAS/CONTACTO) and main headings */
-  --nav-font-size: 30px;
-  /* Size for secondary labels and values (e.g. Comuna, superficie...) */
-  --detail-font-size: 18px;
+  /* Typography sizes
+   *
+   * The navigation links should be relatively small so that they do not
+   * dominate the page on small screens.  The title heading uses its own
+   * size to maintain hierarchy above the detail lines.  Detail text
+   * (labels and values) uses a moderate size for readability without
+   * taking up excessive vertical space.
+   */
+  /* Base font sizes used throughout the site.  The navigation
+     links ("OBRAS" and "CONTACTO") should be relatively small
+     so they do not collide with the project information on small
+     screens.  The title size has been reduced to provide more
+     breathing room above the details and to minimise the risk of
+     overlap with the navigation on devices with shorter viewports.
+     The detail text uses a moderate size for readability without
+     consuming excessive vertical space. */
+  --nav-font-size: 18px;
+  --title-font-size: 24px;
+  --detail-font-size: 15px;
 }
 
 /* Shared logo style for all pages */
@@ -86,7 +101,12 @@
          between the logo and the informational heading.  This
          adjustment makes the spacing consistent with the reference
          material across all project pages. */
-      padding: 200px 60px 60px 60px;
+      /* Provide a generous top padding to separate the logo from
+         the project information, but keep it smaller than before
+         to reduce the overall height of the column on mobile
+         devices.  A value of 150px balances breathing room and
+         prevents the navigation from overlapping the text. */
+      padding: 150px 60px 60px 60px;
     }
 
 /* Information block styling */
@@ -95,20 +115,25 @@
  * labels/values use a smaller secondary size.
  */
 .left-panel .info h1 {
-  font-size: var(--nav-font-size);
+  font-size: var(--title-font-size);
   line-height: 1.1;
   font-weight: 700;
   /* Increase the gap below the heading to mirror the white space
      seen in the reference.  This pushes the subsequent detail
      lines down and prevents the title from crowding the logo. */
-  margin-bottom: 40px;
+  /* Reduce the gap below the heading.  A smaller margin avoids
+     large blank areas and helps the content fit on shorter
+     screens. */
+  margin-bottom: 20px;
   text-transform: uppercase;
 }
 .left-panel .info p {
   /* Provide generous spacing between each label/value pair to
      visually separate them.  This mirrors the reference layout
      where each line is clearly distinguished. */
-  margin-bottom: 28px;
+  /* Tighten spacing between each detail line to prevent tall
+     columns on small screens. */
+  margin-bottom: 10px;
   font-size: var(--detail-font-size);
   line-height: 1.4;
 }
@@ -136,7 +161,10 @@
       color: #222;
       font-size: var(--nav-font-size);
       font-weight: 700;
-      margin-bottom: 12px;
+      /* Use a small margin between navigation links.  This size
+         matches the requested 18px text size and keeps the
+         navigation compact. */
+      margin-bottom: 8px;
       display: block;
     }
 
@@ -209,7 +237,11 @@
 
 /* Page 1 specific styling */
 .page1 .left-panel {
-  padding-top: 200px;
+  /* Match the reduced top padding used on other pages.  A value
+     of 150px ensures the navigation links sit in a consistent
+     vertical position across the site without overlapping the
+     heading when present. */
+  padding-top: 150px;
 }
 /* Remove extra padding on the navigation for page1 now that
    navigation positioning is handled globally via absolute
@@ -248,7 +280,7 @@
          user requested a size of 18px.  The uppercase styling is
          applied via text-transform so that names render in all
          capitals regardless of the markup. */
-      font-size: 18px;
+      font-size: var(--nav-font-size);
       font-weight: 700;
       text-transform: uppercase;
       margin-bottom: 4px;
@@ -257,7 +289,7 @@
       /* Use the same size for emails so they are visually balanced
          with the names.  Keep them lowercase and slightly lighter
          weight. */
-      font-size: 18px;
+      font-size: var(--nav-font-size);
       font-weight: 400;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
