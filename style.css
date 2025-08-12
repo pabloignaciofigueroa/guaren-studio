@@ -129,7 +129,7 @@
      the title and subsequent details is controlled separately by
      paragraph margins to avoid inserting an extra blank line
      between the label and its value. */
-  margin-bottom: 16px;
+  margin-bottom: 0px;
   text-transform: uppercase;
 }
 .left-panel .info p {
