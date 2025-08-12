@@ -132,14 +132,14 @@
   margin-bottom: 32px;
   text-transform: uppercase;
 }
-.left-panel .info p {
-  /* Remove bottom margin so that the label and its value are
-     displayed consecutively without an extra blank line between
-     them.  We will add spacing between successive paragraphs via
-     a separate selector below. */
-  margin: 0;
-  font-size: var(--detail-font-size);
-  line-height: 1.4;
+.left-panel .info .label {
+  display: block; /* sigue forzando salto, pero controlado por CSS */
+  margin-bottom: 0; /* sin espacio extra debajo */
+}
+
+.left-panel .info .value {
+  display: block;
+  margin-top: 0; /* pegado al label */
 }
 
 /* Insert spacing only between successive information rows (pairs).  This
