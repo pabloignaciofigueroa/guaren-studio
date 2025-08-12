@@ -129,7 +129,7 @@
      the title and subsequent details is controlled separately by
      paragraph margins to avoid inserting an extra blank line
      between the label and its value. */
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   text-transform: uppercase;
 }
 .left-panel .info p {
@@ -146,7 +146,7 @@
    ensures there is no additional blank line between a label and its value,
    but there remains a clear separation between each pair of lines. */
 .left-panel .info p + p {
-  margin-top: 18px;
+  margin-top: 0px;
 }
 .left-panel .info .label {
   display: block;
