@@ -84,6 +84,13 @@
   height: auto;
   display: block;
 }
+/* Ensure the logo link remains clickable and sits above other content.  Adding
+   a high z-index prevents it from being overlapped by other elements, while
+   a pointer cursor indicates interactivity to the user. */
+.logo {
+  z-index: 1000;
+  cursor: pointer;
+}
 
 /* Container that holds the two primary columns */
 .page-content {
@@ -118,24 +125,28 @@
   font-size: var(--title-font-size);
   line-height: 1.1;
   font-weight: 700;
-  /* Increase the gap below the heading to mirror the white space
-     seen in the reference.  This pushes the subsequent detail
-     lines down and prevents the title from crowding the logo. */
-  /* Reduce the gap below the heading.  A smaller margin avoids
-     large blank areas and helps the content fit on shorter
-     screens. */
-  margin-bottom: 20px;
+  /* Provide a modest gap below the heading.  The spacing between
+     the title and subsequent details is controlled separately by
+     paragraph margins to avoid inserting an extra blank line
+     between the label and its value. */
+  margin-bottom: 16px;
   text-transform: uppercase;
 }
 .left-panel .info p {
-  /* Provide generous spacing between each label/value pair to
-     visually separate them.  This mirrors the reference layout
-     where each line is clearly distinguished. */
-  /* Tighten spacing between each detail line to prevent tall
-     columns on small screens. */
-  margin-bottom: 10px;
+  /* Remove bottom margin so that the label and its value are
+     displayed consecutively without an extra blank line between
+     them.  We will add spacing between successive paragraphs via
+     a separate selector below. */
+  margin: 0;
   font-size: var(--detail-font-size);
   line-height: 1.4;
+}
+
+/* Insert spacing only between successive information rows (pairs).  This
+   ensures there is no additional blank line between a label and its value,
+   but there remains a clear separation between each pair of lines. */
+.left-panel .info p + p {
+  margin-top: 18px;
 }
 .left-panel .info .label {
   display: block;
