@@ -133,13 +133,12 @@
   text-transform: uppercase;
 }
 .left-panel .info .label {
-  display: block; /* sigue forzando salto, pero controlado por CSS */
-  margin-bottom: 0; /* sin espacio extra debajo */
+  display: block;
+  margin-bottom: 0;
 }
-
 .left-panel .info .value {
   display: block;
-  margin-top: 0; /* pegado al label */
+  margin-top: 0;
 }
 
 /* Insert spacing only between successive information rows (pairs).  This
