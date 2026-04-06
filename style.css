@@ -1,246 +1,189 @@
-/* General resets and base typography */
-* {
+/* ================================================================
+   Guaren Studio — style.css
+   Fuentes: Cormorant Garant (títulos) + DM Mono (texto/datos)
+   Paleta: papel cálido #F5F2EE + tinta #1A1A18
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@300;400;600&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+:root {
+  --bg:          #F5F2EE;
+  --ink:         #1A1A18;
+  --ink-muted:   #8A8780;
+  --nav-size:    12px;
+  --title-size:  30px;
+  --detail-size: 10px;
+}
+
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-    /* Import the Montserrat font family with multiple weights.  This font is
-     * used throughout the site to match the look of the reference
-     * materials provided by the user.  We include 400, 500 and 700
-     * weights for regular, medium and bold text respectively.  The
-     * display=swap directive ensures text remains visible during the
-     * font loading process.
-     */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
-
-    html,
-    body {
-      height: 100%;
-      /* Use Montserrat as the primary typeface with a sans-serif
-         fallback for environments where the Google Font fails to load */
-      font-family: 'Montserrat', sans-serif;
-      color: #222;
-      background-color: #ffffff;
-    }
-
-/*------------------------------------------------------------
- * Typography scaling and custom properties
- *
- * Define variables to control the sizing of navigation links,
- * primary headings and secondary descriptive lines.  These
- * variables make it easy to ensure consistent sizes across
- * pages and to adjust the visual hierarchy when required.
- * The values were chosen to approximate the proportions in
- * the user’s reference images.
- *------------------------------------------------------------*/
-:root {
-  /* Typography sizes
-   *
-   * The navigation links should be relatively small so that they do not
-   * dominate the page on small screens.  The title heading uses its own
-   * size to maintain hierarchy above the detail lines.  Detail text
-   * (labels and values) uses a moderate size for readability without
-   * taking up excessive vertical space.
-   */
-  /* Base font sizes used throughout the site.  The navigation
-     links ("OBRAS" and "CONTACTO") should be relatively small
-     so they do not collide with the project information on small
-     screens.  The title size has been reduced to provide more
-     breathing room above the details and to minimise the risk of
-     overlap with the navigation on devices with shorter viewports.
-     The detail text uses a moderate size for readability without
-     consuming excessive vertical space. */
-  --nav-font-size: 18px;
-  --title-font-size: 24px;
-  --detail-font-size: 15px;
+html, body {
+  height: 100%;
+  font-family: 'DM Mono', monospace;
+  color: var(--ink);
+  background-color: var(--bg);
 }
 
-/* Shared logo style for all pages */
+/* Fade-in al cargar cada página */
+body {
+  animation: pageFadeIn 0.35s ease-out both;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── Logo ──────────────────────────────────────────────────────── */
+
 .logo {
   position: absolute;
   top: 40px;
   left: 50px;
+  z-index: 1000;
   text-decoration: none;
   line-height: 1;
-}
-.logo span {
-  display: block;
-  font-size: 52px;
-  font-weight: 700;
-}
-.logo span.grey {
-  color: #777;
-  font-weight: 600;
-}
-.logo span.black {
-  color: #000;
-  font-weight: 700;
-}
-
-/* When using an image for the logo, constrain its size */
-.logo img {
-  width: 280px;
-  height: auto;
-  display: block;
-}
-/* Ensure the logo link remains clickable and sits above other content.  Adding
-   a high z-index prevents it from being overlapped by other elements, while
-   a pointer cursor indicates interactivity to the user. */
-.logo {
-  z-index: 1000;
   cursor: pointer;
 }
 
-/* Container that holds the two primary columns */
+.logo img {
+  width: 220px;
+  height: auto;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover img {
+  opacity: 0.65;
+}
+
+
+/* ── Página de inicio (index.html) ─────────────────────────────── */
+
+.page-home {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+/* En la home el logo es estático (centrado por el grid) */
+.page-home .logo {
+  position: static;
+}
+
+
+/* ── Layout de dos paneles ─────────────────────────────────────── */
+
 .page-content {
   display: flex;
   height: 100%;
 }
 
-/* Left column: holds information text and bottom navigation */
-    .left-panel {
-      width: 35%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      /* Increase the top padding to create more breathing room
-         between the logo and the informational heading.  This
-         adjustment makes the spacing consistent with the reference
-         material across all project pages. */
-      /* Provide generous top padding to separate the logo from
-         the project information.  A larger top padding helps
-         ensure the info block sits far enough below the logo on
-         narrower screens so that the navigation at the bottom
-         does not overlap with the text. */
-      padding: 220px 60px 60px 60px;
-    }
-
-/* Information block styling */
-/* The heading uses the same size as the navigation links.  Each
- * descriptive line is separated by generous spacing and the
- * labels/values use a smaller secondary size.
- */
-.left-panel .info h1 {
-  font-size: var(--title-font-size);
-  line-height: 1.1;
-  font-weight: 700;
-  /* Provide a modest gap below the heading.  The spacing between
-     the title and subsequent details is controlled separately by
-     paragraph margins to avoid inserting an extra blank line
-     between the label and its value. */
-  margin-bottom: 32px;
-  text-transform: uppercase;
-}
-.left-panel .info .label {
-  display: block;
-  margin-bottom: 0;
-}
-.left-panel .info .value {
-  display: block;
-  margin-top: 0;
+.left-panel {
+  width: 35%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 160px 60px 60px 60px;
 }
 
-/* Insert spacing only between successive information rows (pairs).  This
-   ensures there is no additional blank line between a label and its value,
-   but there remains a clear separation between each pair of lines. */
-.left-panel .info p + p {
-  margin-top: 18px;
-}
-.left-panel .info .label {
-  display: block;
-  font-weight: 700;
-  font-size: var(--detail-font-size);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.left-panel .info .value {
-  display: block;
-  font-weight: 500;
-  font-size: var(--detail-font-size);
-}
 
-/* Add a top margin to the entire info block to create a clear
-   separation between the logo and the project information.  This
-   margin helps ensure the heading and details are grouped as a
-   cohesive block and do not butt up directly against the logo on
-   smaller viewports. */
+/* ── Bloque de información del proyecto ────────────────────────── */
+
 .left-panel .info {
   margin-top: 40px;
 }
 
-/* Bottom navigation links
- *
- * Render the navigation links as text at a uniform size so
- * that “OBRAS” and “CONTACTO” appear identical.  They are
- * stacked vertically with a small margin between lines.
- */
-    .nav-bottom a {
-      text-decoration: none;
-      color: #222;
-      font-size: var(--nav-font-size);
-      font-weight: 700;
-      /* Use a small margin between navigation links.  This size
-         matches the requested 18px text size and keeps the
-         navigation compact. */
-      margin-bottom: 8px;
-      display: block;
-    }
+.left-panel .info h1 {
+  font-family: 'Cormorant Garant', serif;
+  font-size: var(--title-size);
+  font-weight: 300;
+  line-height: 1.18;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 36px;
+  color: var(--ink);
+}
 
-    /* Ensure the navigation links are positioned consistently across
-       pages.  The left padding pushes the links away from the very
-       edge of the column while the bottom padding aligns them
-       visually with the other page layouts. */
-/*
- * Navigation container
- *
- * Position the navigation absolutely within the left panel so
- * that the “OBRAS” and “CONTACTO” links sit in a consistent
- * location across all pages.  Offsetting from the bottom and
- * left edges replicates the spacing in the reference images and
- * prevents the links from drifting when the content height
- * changes.  The .left-panel itself becomes the positioning
- * context via position: relative.
- */
-    .left-panel {
-      position: relative;
-    }
-    .nav-bottom {
-      position: absolute;
-      left: 60px;
-      bottom: 60px;
-    }
+.left-panel .info p + p {
+  margin-top: 20px;
+}
 
-/* Remove strict sizing on nav images; images will inherit
- * their natural dimensions.  The navigation no longer relies
- * on images but this rule ensures any incidental images
- * behave predictably.
- */
-.nav-bottom img {
-  width: auto;
-  height: auto;
+.left-panel .info .label {
   display: block;
-  margin-bottom: 12px;
+  font-size: var(--detail-size);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+  margin-bottom: 3px;
 }
 
-/* Left info image sizing */
-.left-panel .info img {
-  max-width: 100%;
-  height: auto;
+.left-panel .info .value {
   display: block;
+  font-size: var(--detail-size);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--ink);
 }
 
-/* Contact page: display contact image nicely */
-.contact-info img {
-  max-width: 100%;
-  height: auto;
+
+/* ── Navegación inferior ───────────────────────────────────────── */
+
+.nav-bottom {
+  position: absolute;
+  left: 60px;
+  bottom: 60px;
+}
+
+.nav-bottom a,
+.nav-bottom .nav-active {
   display: block;
-}
-.nav-bottom a:hover {
-  text-decoration: underline;
+  font-size: var(--nav-size);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  position: relative;
 }
 
-/* Right column: image container */
+/* Subrayado animado en hover */
+.nav-bottom a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--ink);
+  transition: width 0.25s ease;
+}
+
+.nav-bottom a:hover::after {
+  width: 100%;
+}
+
+/* Estado activo: ítem actual, no clickeable */
+.nav-bottom .nav-active {
+  color: var(--ink-muted);
+  cursor: default;
+}
+
+.nav-bottom .nav-active::after {
+  display: none;
+}
+
+
+/* ── Panel derecho ─────────────────────────────────────────────── */
+
 .right-panel {
   width: 65%;
   display: flex;
@@ -248,67 +191,116 @@
   justify-content: center;
   padding: 60px;
 }
+
+.right-panel a {
+  display: block;
+  line-height: 0;
+}
+
 .right-panel img {
   max-width: 100%;
   height: auto;
   display: block;
+  transition: opacity 0.25s ease;
 }
 
-/* Page 1 specific styling */
-.page1 .left-panel {
-  /* Match the reduced top padding used on other pages.  A value
-     of 150px ensures the navigation links sit in a consistent
-     vertical position across the site without overlapping the
-     heading when present. */
-  padding-top: 150px;
-}
-/* Remove extra padding on the navigation for page1 now that
-   navigation positioning is handled globally via absolute
-   positioning.  Leaving this block empty ensures the global
-   offsets are applied consistently. */
-.page1 .nav-bottom {
+.right-panel a:hover img {
+  opacity: 0.85;
 }
 
-/* Contact page styling
- *
- * For the contact page we remove the heavy top padding that
- * previously pushed the navigation up.  The left panel uses the
- * same padding as other pages so that the navigation stays
- * anchored at the bottom via flexbox spacing.  Contact details
- * are displayed as text within a .contacts container and use
- * the same size as the navigation items.
- */
+
+/* ── Página de contacto ────────────────────────────────────────── */
+
 .page-contact .page-content {
   flex-direction: row;
 }
+
 .page-contact .left-panel {
   width: 35%;
   padding: 140px 60px 60px 60px;
-  justify-content: flex-end;
 }
-    .contacts {
-      width: 65%;
-      padding: 180px 60px;
-      /* Align contact details to the right side as per the user's
-         instructions.  This alignment improves balance with the
-         logo on the opposite side. */
-      text-align: right;
-    }
-    .contacts .name {
-      /* Use a smaller size than the navigation links for names.  The
-         user requested a size of 18px.  The uppercase styling is
-         applied via text-transform so that names render in all
-         capitals regardless of the markup. */
-      font-size: var(--nav-font-size);
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .contacts .email {
-      /* Use the same size for emails so they are visually balanced
-         with the names.  Keep them lowercase and slightly lighter
-         weight. */
-      font-size: var(--nav-font-size);
-      font-weight: 400;
-      margin-bottom: 20px;
-    }
+
+.contacts {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 80px;
+  text-align: right;
+}
+
+.contacts .name {
+  font-size: var(--nav-size);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 4px;
+}
+
+.contacts .email {
+  font-size: var(--nav-size);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  margin-bottom: 28px;
+  color: var(--ink-muted);
+}
+
+
+/* ── Página 1 (menú) ───────────────────────────────────────────── */
+
+.page1 .left-panel {
+  padding-top: 150px;
+}
+
+
+/* ── Responsive (mobile) ───────────────────────────────────────── */
+
+@media (max-width: 768px) {
+
+  .logo {
+    top: 24px;
+    left: 24px;
+  }
+
+  .logo img {
+    width: 160px;
+  }
+
+  .page-content {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .left-panel,
+  .page-contact .left-panel {
+    width: 100%;
+    padding: 110px 32px 16px;
+  }
+
+  .right-panel {
+    width: 100%;
+    padding: 32px 32px 56px;
+  }
+
+  .contacts {
+    width: 100%;
+    padding: 0 32px 56px;
+    text-align: left;
+  }
+
+  .nav-bottom {
+    position: static;
+    margin-top: 40px;
+  }
+
+  .page-contact .right-panel {
+    width: 100%;
+    padding: 0 32px 56px;
+  }
+
+  .left-panel .info h1 {
+    font-size: 24px;
+  }
+
+}
