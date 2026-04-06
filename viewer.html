@@ -20,9 +20,8 @@
 
     :root {
       --bg:        #ffffff;
-      --ink:       #2C1810;
-      --muted:     #9A8870;
-      --accent:    #C8861A;
+      --ink:       #111111;
+      --muted:     #888888;
       --serif:     'EB Garamond', Georgia, serif;
       --sans:      'Josefin Sans', sans-serif;
     }
@@ -132,11 +131,11 @@
       left: 0;
       width: 0;
       height: 1px;
-      background: var(--accent);
+      background: var(--ink);
       transition: width 0.25s;
     }
 
-    .nav a:hover { color: var(--accent); }
+    .nav a:hover { opacity: 0.45; }
     .nav a:hover::after { width: 100%; }
 
     /* ── Panel derecho ──────────────────────── */
@@ -197,7 +196,7 @@
       line-height: 1;
     }
 
-    .ctrl:hover { color: var(--accent); }
+    .ctrl:hover { opacity: 0.45; }
 
     .ctrl:disabled {
       opacity: 0.25;
@@ -226,7 +225,7 @@
 
     .progress-fill {
       height: 100%;
-      background: var(--accent);
+      background: var(--ink);
       transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
