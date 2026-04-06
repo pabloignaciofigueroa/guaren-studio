@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guaren Studio — Visor de Proyecto</title>
+
+  <!-- React 18 + Babel (para JSX sin build step) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Golden Hour fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset & base ───────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #FDF6E3;
+      --ink:       #2C1810;
+      --muted:     #9A8870;
+      --accent:    #C8861A;
+      --serif:     'EB Garamond', Georgia, serif;
+      --sans:      'Josefin Sans', sans-serif;
+    }
+
+    html, body, #root {
+      height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+
+    /* ── Layout ─────────────────────────────── */
+    .viewer {
+      display: flex;
+      height: 100vh;
+      position: relative;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Logo ───────────────────────────────── */
+    .logo {
+      position: absolute;
+      top: 40px;
+      left: 50px;
+      z-index: 10;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 200px;
+      height: auto;
+      display: block;
+      transition: opacity 0.2s;
+    }
+
+    .logo:hover img { opacity: 0.65; }
+
+    /* ── Panel izquierdo ────────────────────── */
+    .left {
+      width: 35%;
+      padding: 160px 60px 60px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .info { flex: 1; margin-top: 40px; }
+
+    .info h1 {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.18;
+      margin-bottom: 36px;
+    }
+
+    .detail { margin-bottom: 18px; }
+
+    .detail .lbl {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .detail .val {
+      display: block;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Navegación ─────────────────────────── */
+    .nav {
+      margin-top: auto;
+    }
+
+    .nav a {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      text-decoration: none;
+      color: var(--ink);
+      margin-bottom: 8px;
+      position: relative;
+      transition: color 0.2s;
+      width: fit-content;
+    }
+
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+
+    .nav a:hover { color: var(--accent); }
+    .nav a:hover::after { width: 100%; }
+
+    /* ── Panel derecho ──────────────────────── */
+    .right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 60px 48px;
+      cursor: crosshair;
+      overflow: hidden;
+    }
+
+    /* ── Imagen con fade al cambiar ─────────── */
+    .img-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .project-img {
+      max-width: 100%;
+      max-height: calc(100vh - 220px);
+      object-fit: contain;
+      display: block;
+      /* La animación se dispara cada vez que React remonta el elemento (key cambia) */
+      animation: imgFade 0.45s ease-out;
+    }
+
+    @keyframes imgFade {
+      from { opacity: 0; transform: scale(0.985); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── Controles ──────────────────────────── */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-top: 28px;
+      flex-shrink: 0;
+    }
+
+    .ctrl {
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 4px 10px;
+      transition: color 0.2s, opacity 0.2s;
+      line-height: 1;
+    }
+
+    .ctrl:hover { color: var(--accent); }
+
+    .ctrl:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .counter {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      min-width: 48px;
+      text-align: center;
+    }
+
+    /* ── Barra de progreso ──────────────────── */
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 35%;           /* empieza donde termina el panel izquierdo */
+      right: 0;
+      height: 2px;
+      background: rgba(44, 24, 16, 0.08);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Nombre de lámina ───────────────────── */
+    .sheet-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    /* ── Mobile ─────────────────────────────── */
+    @media (max-width: 768px) {
+      .viewer { flex-direction: column; height: auto; min-height: 100vh; }
+      .logo   { top: 24px; left: 24px; }
+      .logo img { width: 150px; }
+      .left   { width: 100%; padding: 110px 32px 24px; }
+      .right  { padding: 24px 32px 48px; min-height: 60vw; }
+      .progress-bar { left: 0; }
+      .info h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // ─── Datos del proyecto ───────────────────────────────────────
+    const BASE = 'https://pabloignaciofigueroa.github.io/guaren-studio/images/';
+
+    const IMAGES = [
+      { src: 'imagen_pag02.png', label: 'Plano General' },
+      { src: 'imagen_pag03.png', label: 'Alzados' },
+      { src: 'imagen_pag04.png', label: 'Elevaciones Laterales' },
+      { src: 'imagen_pag05.png', label: 'Secciones' },
+      { src: 'imagen_pag06.png', label: 'Render Exterior' },
+      { src: 'imagen_pag07.png', label: 'Render Exterior 2' },
+      { src: 'imagen_pag08.png', label: 'Render Interior' },
+      { src: 'imagen_pag09.png', label: 'Render Interior 2' },
+    ];
+
+    const PROJECT = {
+      title: ['Centro', 'Comunitario', 'Bomberos'],
+      details: [
+        { label: 'Comuna',            value: 'Chonchi' },
+        { label: 'Superficie Terreno', value: '920 M2' },
+        { label: 'Obra Construida',   value: '240 M2' },
+        { label: 'Costo Asociado',    value: '270 M$' },
+      ],
+    };
+
+    // ─── Componente principal ─────────────────────────────────────
+    function App() {
+      const [idx, setIdx] = React.useState(0);
+
+      // Navegación circular con teclado
+      React.useEffect(() => {
+        const onKey = (e) => {
+          if (e.key === 'ArrowRight') setIdx(i => (i + 1) % IMAGES.length);
+          if (e.key === 'ArrowLeft')  setIdx(i => (i - 1 + IMAGES.length) % IMAGES.length);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+      }, []);
+
+      // Precarga de la imagen siguiente
+      React.useEffect(() => {
+        const next = (idx + 1) % IMAGES.length;
+        const img = new Image();
+        img.src = BASE + IMAGES[next].src;
+      }, [idx]);
+
+      const goNext = () => setIdx(i => (i + 1) % IMAGES.length);
+      const goPrev = () => setIdx(i => (i - 1 + IMAGES.length) % IMAGES.length);
+      const pct = ((idx + 1) / IMAGES.length) * 100;
+
+      return (
+        <div className="viewer">
+
+          {/* Logo — vuelve al menú principal */}
+          <a
+            href="https://pabloignaciofigueroa.github.io/guaren-studio/page1.html"
+            className="logo"
+          >
+            <img src={BASE + 'logo.png'} alt="Guaren Studio" />
+          </a>
+
+          {/* Panel izquierdo: info del proyecto */}
+          <div className="left">
+            <div className="info">
+              <h1>
+                {PROJECT.title.map((line, i) => (
+                  <React.Fragment key={i}>{line}<br /></React.Fragment>
+                ))}
+              </h1>
+              {PROJECT.details.map(d => (
+                <div key={d.label} className="detail">
+                  <span className="lbl">{d.label}</span>
+                  <span className="val">{d.value}</span>
+                </div>
+              ))}
+            </div>
+
+            <nav className="nav">
+              <a href="https://pabloignaciofigueroa.github.io/guaren-studio/page1.html">
+                OBRAS
+              </a>
+              <a href="https://pabloignaciofigueroa.github.io/guaren-studio/page10.html">
+                CONTACTO
+              </a>
+            </nav>
+          </div>
+
+          {/* Panel derecho: imagen + controles */}
+          <div className="right" onClick={goNext}>
+
+            {/* Nombre de la lámina actual */}
+            <p className="sheet-label">{IMAGES[idx].label}</p>
+
+            {/* Imagen: key={idx} fuerza remount → dispara animación CSS */}
+            <div className="img-wrap">
+              <img
+                key={idx}
+                src={BASE + IMAGES[idx].src}
+                alt={IMAGES[idx].label}
+                className="project-img"
+              />
+            </div>
+
+            {/* Controles ← contador → */}
+            <div className="controls" onClick={e => e.stopPropagation()}>
+              <button
+                className="ctrl"
+                onClick={goPrev}
+                aria-label="Imagen anterior"
+              >
+                ←
+              </button>
+              <span className="counter">
+                {idx + 1} / {IMAGES.length}
+              </span>
+              <button
+                className="ctrl"
+                onClick={goNext}
+                aria-label="Imagen siguiente"
+              >
+                →
+              </button>
+            </div>
+          </div>
+
+          {/* Barra de progreso: crece con cada lámina */}
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: pct + '%' }} />
+          </div>
+
+        </div>
+      );
+    }
+
+    // ─── Montar React ─────────────────────────────────────────────
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

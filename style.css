@@ -1,16 +1,18 @@
 /* ================================================================
    Guaren Studio — style.css
-   Fuentes: Cormorant Garant (títulos) + DM Mono (texto/datos)
-   Paleta: papel cálido #F5F2EE + tinta #1A1A18
+   Tema: Golden Hour
+   Fuentes: EB Garamond (títulos) + Josefin Sans (texto/datos)
+   Paleta: pergamino cálido #FDF6E3 + tinta oscura #2C1810 + ámbar #C8861A
    ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@300;400;600&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Josefin+Sans:wght@300;400;600&display=swap');
 
 :root {
-  --bg:          #F5F2EE;
-  --ink:         #1A1A18;
-  --ink-muted:   #8A8780;
-  --nav-size:    12px;
+  --bg:          #FDF6E3;
+  --ink:         #2C1810;
+  --ink-muted:   #9A8870;
+  --accent:      #C8861A;
+  --nav-size:    11px;
   --title-size:  30px;
   --detail-size: 10px;
 }
@@ -23,7 +25,7 @@
 
 html, body {
   height: 100%;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Josefin Sans', sans-serif;
   color: var(--ink);
   background-color: var(--bg);
 }
@@ -71,7 +73,6 @@ body {
   min-height: 100vh;
 }
 
-/* En la home el logo es estático (centrado por el grid) */
 .page-home .logo {
   position: static;
 }
@@ -101,9 +102,9 @@ body {
 }
 
 .left-panel .info h1 {
-  font-family: 'Cormorant Garant', serif;
+  font-family: 'EB Garamond', serif;
   font-size: var(--title-size);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.18;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -118,7 +119,7 @@ body {
 .left-panel .info .label {
   display: block;
   font-size: var(--detail-size);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--ink-muted);
@@ -146,13 +147,14 @@ body {
 .nav-bottom .nav-active {
   display: block;
   font-size: var(--nav-size);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   margin-bottom: 10px;
   text-decoration: none;
   color: var(--ink);
   position: relative;
+  transition: color 0.2s ease;
 }
 
 /* Subrayado animado en hover */
@@ -163,15 +165,19 @@ body {
   left: 0;
   width: 0;
   height: 1px;
-  background: var(--ink);
+  background: var(--accent);
   transition: width 0.25s ease;
+}
+
+.nav-bottom a:hover {
+  color: var(--accent);
 }
 
 .nav-bottom a:hover::after {
   width: 100%;
 }
 
-/* Estado activo: ítem actual, no clickeable */
+/* Estado activo */
 .nav-bottom .nav-active {
   color: var(--ink-muted);
   cursor: default;
@@ -190,11 +196,13 @@ body {
   align-items: center;
   justify-content: center;
   padding: 60px;
+  cursor: crosshair;
 }
 
 .right-panel a {
   display: block;
   line-height: 0;
+  cursor: crosshair;
 }
 
 .right-panel img {
@@ -231,7 +239,7 @@ body {
 
 .contacts .name {
   font-size: var(--nav-size);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   margin-bottom: 4px;
